@@ -82,6 +82,11 @@ export const InputContainer = styled.div`
         margin-right: 16px;
     }
 `;
+export const Error = styled.span`
+    font-size: 1rem;
+    font-weight: bold;
+    color: coral;
+`;
 
 export const Background = styled.div`
   flex: 1;
