@@ -20,14 +20,15 @@ interface Credentials {
 interface AuthContextData {
     user: User;
     signIn(credentials: Credentials): Promise<void>;
-    signOut: () => void
+    signOut: () => void;    
 }
 
 interface AuthProviderProps {
     children: ReactNode
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+const authContext = createContext<AuthContextData>({} as AuthContextData);
+
 
 export function AuthProvider({children}:AuthProviderProps) {
 
@@ -41,7 +42,7 @@ export function AuthProvider({children}:AuthProviderProps) {
         }
 
         return {} as AuthState;
-    })
+    })   
 
     const signIn = useCallback( async ({email, password}) => {
         
@@ -69,17 +70,17 @@ export function AuthProvider({children}:AuthProviderProps) {
     }, []);
 
     return (
-        <AuthContext.Provider
+        <authContext.Provider
             value={{user: data.user, signIn, signOut}}
         >
             {children}
-        </AuthContext.Provider>
+        </authContext.Provider>
     )
 }
 
 export function useAuth(): AuthContextData {
     
-    const context = useContext(AuthContext);
+    const context = useContext(authContext);    
   
     if (!context) {
       throw new Error('useAuth must be used within an AuthProvider');
